@@ -12,7 +12,7 @@ import {initTable} from "./components/table.js";
 
 // Исходные данные используемые в render()
 const {data, ...indexes} = initData(sourceData);
-
+hellow world
 /**
  * Сбор и обработка полей из таблицы
  * @returns {Object}
