@@ -17,7 +17,11 @@ const sortUp = field => (a, b) => {
     }
     return 0;      // Значения равны, сохраняем текущий порядок
 }
+<<<<<<< HEAD
 sortUp('total');
+=======
+
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 /**
  * Функция сортировки по убыванию для указанного поля объекта
  *
@@ -81,9 +85,15 @@ export const sortMap = {
  * и применяет соответствующую функцию сортировки только при необходимости.
  * Это оптимизирует работу, предотвращая ненужные операции.
  */
+<<<<<<< HEAD
 export function sortCollection(arr, field, order) { // field не равен   массив , total . none;
     if (field && order !== 'none' && sortMap[order])
         return arr.toSorted(sortFn[order](field)); // sortUp('total');
+=======
+export function sortCollection(arr, field, order) {
+    if (field && order !== 'none' && sortMap[order])
+        return arr.toSorted(sortFn[order](field));
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
     else
         return arr;  // Возвращаем исходный массив без изменений, если сортировка не нужна
 }

@@ -1,6 +1,7 @@
 import {createComparison, defaultRules} from "../lib/compare.js";
 
 // @todo: #4.3 — настроить компаратор
+<<<<<<< HEAD
 const compare = createComparison(defaultRules); 
 
 
@@ -30,5 +31,16 @@ export function initFiltering(elements, indexes) {
         console.log(data);
         console.log(state);
         return data.filter(row => compare(row, state)); 
+=======
+
+export function initFiltering(elements, indexes) {
+    // @todo: #4.1 — заполнить выпадающие списки опциями
+
+    return (data, state, action) => {
+        // @todo: #4.2 — обработать очистку поля
+
+        // @todo: #4.5 — отфильтровать данные используя компаратор
+        return data;
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
     }
 }

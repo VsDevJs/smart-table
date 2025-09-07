@@ -1,5 +1,6 @@
 import './fonts/ys-display/fonts.css'
 import './style.css'
+<<<<<<< HEAD
 import { initPagination } from './components/pagination.js';
 
 // Подключаем data 
@@ -7,14 +8,23 @@ import {data as sourceData} from "./data/dataset_1.js";
 
 
 // Приводим их впорядок (предподготовку)
+=======
+
+import {data as sourceData} from "./data/dataset_1.js";
+
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 import {initData} from "./data.js";
 import {processFormData} from "./lib/utils.js";
 
 import {initTable} from "./components/table.js";
 // @todo: подключение
+<<<<<<< HEAD
 import {initSorting} from "./components/sorting.js";
 import {initFiltering} from "./components/filtering.js";
 import {initSearching} from "./components/searching.js";
+=======
+
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 
 // Исходные данные используемые в render()
 const {data, ...indexes} = initData(sourceData);
@@ -24,6 +34,7 @@ const {data, ...indexes} = initData(sourceData);
  * @returns {Object}
  */
 function collectState() {
+<<<<<<< HEAD
     const state = processFormData(new FormData(sampleTable.container)); // Передаём form.table и инпуты в нём;
 
     console.log(state);
@@ -37,11 +48,21 @@ function collectState() {
     };
 }
 // TEST:
+=======
+    const state = processFormData(new FormData(sampleTable.container));
+
+    return {
+        ...state
+    };
+}
+
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 /**
  * Перерисовка состояния таблицы при любых изменениях
  * @param {HTMLButtonElement?} action
  */
 function render(action) {
+<<<<<<< HEAD
     let state = collectState(); // состояние полей из таблицы в виде объекта;
     let result = [...data]; // копируем для последующего изменения
     // @todo: использование
@@ -52,17 +73,31 @@ function render(action) {
     result = applySorting(result, state, action);
     result = applyPagination(result, state, action); //  resutl - данные, state - состояния полей
     sampleTable.render(result);
+=======
+    let state = collectState(); // состояние полей из таблицы
+    let result = [...data]; // копируем для последующего изменения
+    // @todo: использование
+
+
+    sampleTable.render(result)
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 }
 
 const sampleTable = initTable({
     tableTemplate: 'table',
     rowTemplate: 'row',
+<<<<<<< HEAD
     before: ['search','header','filter'],
     after: ['pagination'],
+=======
+    before: [],
+    after: []
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 }, render);
 
 // @todo: инициализация
 
+<<<<<<< HEAD
 const applySorting = initSorting([        // Нам нужно передать сюда массив элементов, которые вызывают сортировку, чтобы изменять их визуальное представление
     sampleTable.header.elements.sortByDate,
     sampleTable.header.elements.sortByTotal
@@ -87,6 +122,8 @@ const applyPagination = initPagination(
 
 const applySearching = initSearching(sampleTable.search.elements.search.dataset.name);
 
+=======
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 
 const appRoot = document.querySelector('#app');
 appRoot.appendChild(sampleTable.container);

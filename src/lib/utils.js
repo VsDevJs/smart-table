@@ -11,6 +11,7 @@
  */
 export function cloneTemplate(templateId) {
     // Находим шаблон в документе по его ID
+<<<<<<< HEAD
     const template = document.getElementById(templateId); // берём tamplate table;
 
     // Клонируем первый дочерний элемент шаблона вместе со всеми его потомками
@@ -19,6 +20,16 @@ export function cloneTemplate(templateId) {
     // Находим все элементы с атрибутом data-name и создаем объект,
     // где ключами являются значения data-name, а значениями - сами элементы;
     const elements = Array.from(clone.querySelectorAll('[data-name]')).reduce((acc, el) => { // записали в каждый acc date,name и тд;
+=======
+    const template = document.getElementById(templateId);
+
+    // Клонируем первый дочерний элемент шаблона вместе со всеми его потомками
+    const clone = template.content.firstElementChild.cloneNode(true);
+
+    // Находим все элементы с атрибутом data-name и создаем объект,
+    // где ключами являются значения data-name, а значениями - сами элементы
+    const elements = Array.from(clone.querySelectorAll('[data-name]')).reduce((acc, el) => {
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
         acc[el.dataset.name] = el;
         return acc;
     }, {});
@@ -44,8 +55,11 @@ export function cloneTemplate(templateId) {
  * (как в случае с multiple select или checkbox).
  */
 export function processFormData(formData) {
+<<<<<<< HEAD
     let test = Array.from(formData.entries());
     console.log(test);
+=======
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
     // Преобразуем entries() в массив пар [ключ, значение] и создаем объект
     return Array.from(formData.entries()).reduce((result, [key, value]) => {
         result[key] = value;
@@ -68,6 +82,7 @@ export function processFormData(formData) {
  * объекты по их уникальному идентификатору с вычислительной сложностью O(1)
  * вместо O(n) при переборе массива.
  */
+<<<<<<< HEAD
 // arr - массив селлерсов,  field - 'id'  , val = коллбэк функция;
 
 // {
@@ -78,6 +93,8 @@ export function processFormData(formData) {
 //             "position": "Senior Seller"
 //         }
 
+=======
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
 export const makeIndex = (arr, field, val) => arr.reduce((acc, cur) => ({
     ...acc,  // Копируем все уже накопленные значения
     [cur[field]]: val(cur)  // Добавляем новое поле с именем из cur[field] и значением из val(cur)
@@ -100,6 +117,7 @@ export const makeIndex = (arr, field, val) => arr.reduce((acc, cur) => ({
  * 1. Текущая страница находится примерно в центре отображаемого диапазона
  * 2. Количество отображаемых страниц не превышает указанный лимит
  * 3. Диапазон корректируется у краев (начало и конец списка страниц)
+<<<<<<< HEAD
  */   //3   230/10 = 23, 5  
 export function getPages(currentPage, maxPage, limit) {
     // Проверяем, что входные данные являются корректными числами
@@ -112,6 +130,20 @@ export function getPages(currentPage, maxPage, limit) {
     let end = start + limit - 1;  // Заканчиваем через limit страниц после start 
     // Корректируем, если мы близко к концу
     if (end > maxPage){
+=======
+ */
+export function getPages(currentPage, maxPage, limit) {
+    // Проверяем, что входные данные являются корректными числами
+    currentPage = Math.max(1, Math.min(maxPage, currentPage));  // currentPage должен быть от 1 до maxPage
+    limit = Math.min(maxPage, limit);  // limit не должен превышать maxPage
+
+    // Вычисляем диапазон страниц для отображения
+    let start = Math.max(1, currentPage - Math.floor(limit / 2));  // Начинаем с currentPage минус половина лимита
+    let end = start + limit - 1;  // Заканчиваем через limit страниц после start
+
+    // Корректируем, если мы близко к концу
+    if (end > maxPage) {
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
         end = maxPage;  // Не выходим за пределы максимальной страницы
         start = Math.max(1, end - limit + 1);  // Пересчитываем начало
     }
@@ -121,6 +153,10 @@ export function getPages(currentPage, maxPage, limit) {
     for (let i = start; i <= end; i++) {
         pages.push(i);
     }
+<<<<<<< HEAD
     console.log(pages);
+=======
+
+>>>>>>> 7e65ca172ecd826430730549c58a24f5c1240581
     return pages;
 }
