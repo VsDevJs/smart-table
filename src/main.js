@@ -83,11 +83,11 @@ const applyPagination = initPagination(
         input.checked = isCurrent;
         label.textContent = page;
         return el;
-    }
+    } 
 );
 
 const applySearching = initSearching(sampleTable.search.elements.search.dataset.name);
-
+console.log('kek');
 const appRoot = document.querySelector('#app');
 appRoot.appendChild(sampleTable.container);
 
