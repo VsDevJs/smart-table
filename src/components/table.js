@@ -54,7 +54,6 @@ export function initTable(settings, onAction) {
           }
         }
       });
-
         return row.container;
     });
     // {{ data-name:, data-name:  }}
