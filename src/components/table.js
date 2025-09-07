@@ -57,7 +57,6 @@ export function initTable(settings, onAction) {
 
         return row.container;
     });
-
     // {{ data-name:, data-name:  }}
     // заменили в 1-ом шаблоне объект с rows на наш массив;
     root.elements.rows.replaceChildren(...nextRows); // это объект в котром elements в котором rows который явл div в него row
