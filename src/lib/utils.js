@@ -44,6 +44,8 @@ export function cloneTemplate(templateId) {
  * (как в случае с multiple select или checkbox).
  */
 export function processFormData(formData) {
+    let test = Array.from(formData.entries());
+    console.log(test);
     // Преобразуем entries() в массив пар [ключ, значение] и создаем объект
     return Array.from(formData.entries()).reduce((result, [key, value]) => {
         result[key] = value;
@@ -66,6 +68,17 @@ export function processFormData(formData) {
  * объекты по их уникальному идентификатору с вычислительной сложностью O(1)
  * вместо O(n) при переборе массива.
  */
+
+// arr - массив селлерсов,  field - 'id'  , val = коллбэк функция;
+
+// {
+//             "id": "seller_1",
+//             "first_name": "Alexey",
+//             "last_name": "Petrov",
+//             "start_date": "2024-07-17",
+//             "position": "Senior Seller"
+//         }
+
 export const makeIndex = (arr, field, val) => arr.reduce((acc, cur) => ({
     ...acc,  // Копируем все уже накопленные значения
     [cur[field]]: val(cur)  // Добавляем новое поле с именем из cur[field] и значением из val(cur)
@@ -88,18 +101,19 @@ export const makeIndex = (arr, field, val) => arr.reduce((acc, cur) => ({
  * 1. Текущая страница находится примерно в центре отображаемого диапазона
  * 2. Количество отображаемых страниц не превышает указанный лимит
  * 3. Диапазон корректируется у краев (начало и конец списка страниц)
- */
+<<<<<<< HEAD
+ */   //3   230/10 = 23, 5  
 export function getPages(currentPage, maxPage, limit) {
     // Проверяем, что входные данные являются корректными числами
+    // показывает текущую страницу
     currentPage = Math.max(1, Math.min(maxPage, currentPage));  // currentPage должен быть от 1 до maxPage
-    limit = Math.min(maxPage, limit);  // limit не должен превышать maxPage
+    limit = Math.min(maxPage, limit);  // Просто проверка т.к и так есть логика отображения; limit не должен превышать maxPage 
 
     // Вычисляем диапазон страниц для отображения
-    let start = Math.max(1, currentPage - Math.floor(limit / 2));  // Начинаем с currentPage минус половина лимита
-    let end = start + limit - 1;  // Заканчиваем через limit страниц после start
-
+    let start = Math.max(1, currentPage - Math.floor(limit / 2)); // Начинаем с currentPage минус половина лимита
+    let end = start + limit - 1;  // Заканчиваем через limit страниц после start 
     // Корректируем, если мы близко к концу
-    if (end > maxPage) {
+    if (end > maxPage){
         end = maxPage;  // Не выходим за пределы максимальной страницы
         start = Math.max(1, end - limit + 1);  // Пересчитываем начало
     }
@@ -109,6 +123,6 @@ export function getPages(currentPage, maxPage, limit) {
     for (let i = start; i <= end; i++) {
         pages.push(i);
     }
-
+    console.log(pages);
     return pages;
 }

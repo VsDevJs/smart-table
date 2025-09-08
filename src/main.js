@@ -1,8 +1,12 @@
 import './fonts/ys-display/fonts.css'
 import './style.css'
-
-import {data as sourceData} from "./data/dataset_1.js";
 import { initPagination } from './components/pagination.js';
+
+// Подключаем data 
+import {data as sourceData} from "./data/dataset_1.js";
+
+// Приводим их впорядок (предподготовку)
+
 import {initData} from "./data.js";
 import {processFormData} from "./lib/utils.js";
 
@@ -12,6 +16,9 @@ import {initTable} from "./components/table.js";
 import {initSorting} from "./components/sorting.js";
 import {initFiltering} from "./components/filtering.js";
 import {initSearching} from "./components/searching.js";
+
+
+
 
 // Исходные данные используемые в render()
 const {data, ...indexes} = initData(sourceData);
@@ -24,6 +31,8 @@ const {data, ...indexes} = initData(sourceData);
 
 
 function collectState() {
+     // Передаём form.table и инпуты в нём;
+
     const state = processFormData(new FormData(sampleTable.container)); // Передаём form.table и инпуты в нём;
 
     console.log(state);
@@ -37,11 +46,14 @@ function collectState() {
     };
 }
 // TEST:
+
 /**
  * Перерисовка состояния таблицы при любых изменениях
  * @param {HTMLButtonElement?} action
  */
 function render(action) {
+     // состояние полей из таблицы в виде объекта;
+
     let state = collectState(); // состояние полей из таблицы в виде объекта;
     let result = [...data]; // копируем для последующего изменения
     // @todo: использование
@@ -52,6 +64,7 @@ function render(action) {
     result = applySorting(result, state, action);
     result = applyPagination(result, state, action); //  resutl - данные, state - состояния полей
     sampleTable.render(result);
+
 }
 
 const sampleTable = initTable({
@@ -59,7 +72,6 @@ const sampleTable = initTable({
     rowTemplate: 'row',
     before: ['search','header','filter'],
     after: ['pagination'],
-
 }, render);
 
 // @todo: инициализация
@@ -88,6 +100,7 @@ const applyPagination = initPagination(
 
 const applySearching = initSearching(sampleTable.search.elements.search.dataset.name);
 console.log('kek');
+
 const appRoot = document.querySelector('#app');
 appRoot.appendChild(sampleTable.container);
 

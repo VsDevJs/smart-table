@@ -23,16 +23,33 @@ const isEmpty = (value) => {
  * которые возвращают другие функции. Это позволяет создавать настраиваемые
  * правила с параметрами.
  */
+
+
+// const defaultRules = [
+//     'skipNonExistentSourceFields',
+//     'skipEmptyTargetValues',
+//     'failOnEmptySource',
+//     'arrayAsRange',
+//     'stringIncludes',
+//     'exactEquality'
+// ]; const ruleOutput = rule(key, sourceValue, targetValue, source, target);
+
+
 const rules = {
     // Пропускать поля, которых нет в исходном объекте
     // Подробнее: это помогает избежать ошибок при сравнении, когда целевой объект
     // содержит поля, которых нет в исходном объекте
-    skipNonExistentSourceFields: (source) => (key, sourceValue, targetValue) => {
+
+    skipNonExistentSourceFields: (source) => (key, sourceValue, targetValue) => { // замкнули юзера
+
         if (!Object.prototype.hasOwnProperty.call(source, key)) {
             return { skip: true };
         }
         return { skip: false };
     },
+
+    // const ruleOutput = rule(key, sourceValue, targetValue, source, target);
+    // Т.е чтобы совпадали ключи source и target;
 
     // Пропускать пустые значения в целевом объекте
     // Подробнее: это полезно, когда вы не хотите сравнивать поля,
@@ -47,6 +64,7 @@ const rules = {
     // Возвращать неудачу, если исходное значение пусто, а целевое нет
     // Подробнее: это правило проверяет обязательные поля,
     // требующие непустых значений
+
     failOnEmptySource: () => (key, sourceValue, targetValue) => {
         if (isEmpty(sourceValue)) {
             return { result: false };
@@ -58,7 +76,7 @@ const rules = {
     // Подробнее: это позволяет проверить, попадает ли число
     // в заданный диапазон. Например, [10, 20] означает от 10 до 20 включительно
     arrayAsRange: () => (key, sourceValue, targetValue) => {
-        if (Array.isArray(targetValue)) {
+        if (Array.isArray(targetValue)) { // Nikolay Ivanov;
             if (targetValue.length === 2) {
                 const [from, to] = targetValue;
 
@@ -78,7 +96,8 @@ const rules = {
     // Сравнение на включение подстроки
     // Подробнее: проверяет, содержит ли строка другую строку
     // без учёта регистра. Удобно для поиска по тексту.
-    stringIncludes: () => (key, sourceValue, targetValue) => {
+
+    stringIncludes: () => (key, sourceValue, targetValue) => { // Nikolay Ivanov  nikolay
         if (typeof sourceValue === 'string' && typeof targetValue === 'string') {
             return { result: sourceValue.includes(targetValue) };
         }
@@ -231,17 +250,31 @@ function compare(source, target, rulesList) {
         throw new Error('Rules list is required for comparison');
     }
 
+    // skipEmptyTargetValues: () => (key, sourceValue, targetValue) => {
+    //     if (isEmpty(targetValue)) {
+    //         return { skip: true };
+    //     }
+    //     return { skip: false };
+    // },
+
+    // 1. Проверяем ключи target , если он является ключом объекта source,
+ 
+   
     // Проверяем каждое свойство в целевом объекте
     for (const key in target) {
         if (Object.prototype.hasOwnProperty.call(target, key)) {
-            const targetValue = target[key];
-            const sourceValue = source[key];
 
-            // Применяем каждое правило по порядку
+            // совпадают только seller, date, customer; у source и target;
+            const targetValue = target[key]; // Target - "Nikolai Ivanov" или totalTo например;
+            const sourceValue = source[key]; // Наш объект 1 "Nikolai Ivanov"; или может null быть
+
+            // Применяем каждое правило по порядку;
             let skipProperty = false;
             let ruleResult = null;
 
             for (const rule of rulesList) {
+                // seller Т.е тут свойство key может не относиться к source;
+                // key = seller, sourceValue = , targetValue = 
                 const ruleOutput = rule(key, sourceValue, targetValue, source, target);
 
                 // Проверяем, нужно ли пропустить это свойство
@@ -290,19 +323,22 @@ function compare(source, target, rulesList) {
  * Это позволяет повторно использовать одни и те же настройки сравнения без их
  * повторного определения.
  */
+
+// Aункция в которой возвращается функция
+// 
 function createComparison(ruleNames, customRules = []) {
-    return (source, target) => {
-        const rulesList = [
-            ...ruleNames.map(ruleName => {
+    return (source, target) => {  // row (объект) юзеры наши  + state (состояние)
+        const rulesList = [ // массив с правилами по умолчанию 
+            ...ruleNames.map(ruleName => { //
                 // Для правил, которым нужны параметры
-                if (ruleName === 'skipNonExistentSourceFields') {
-                    return rules[ruleName](source);
+                if (ruleName === 'skipNonExistentSourceFields') { // skipNonExistentSourceFields
+                    return rules[ruleName](source); // Берём объект и вызываем эту функцию - свойство;
+                    // Она в свою очередь вохвращает
                 }
                 return rules[ruleName]();
             }),
             ...customRules
         ];
-
         return compare(source, target, rulesList);
     };
 }
@@ -315,4 +351,5 @@ export {
     rules,
     defaultRules,
     createComparison
-};
+}
+
